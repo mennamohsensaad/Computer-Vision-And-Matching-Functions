@@ -1,11 +1,12 @@
 ## Objectives
 
-* Apply Hough transform for detecting parametric shapes like circles and lines.
-* Apply Harris operator for detecting corners.
+* Apply Template Matching method using different similarity metrics.
+* Apply SIFT and matching images with different rotations and scales.
+* Reporting results and computation times.
 
 ## Deadline
 
-**Thursday 26/3/2020 11:59 PM**
+**Thursday 16/4/2020 11:59 PM**
 
 ## Joining to Assignment Repository
 Refer to this sheet to know your **Group number**: (https://docs.google.com/spreadsheets/d/1H0mGNnDtruLanYVxQH6439rXLTpPglXzglBmYt1J_ow/edit?usp=sharing)
@@ -37,17 +38,23 @@ Now you will find your work of the previous task uploaded to the new repository.
 
 You need to implement Python functions which will support the following tasks:
 
-1. For all given images; detect edges using Canny edge detector, detect lines and circles located in these images (if any). Superimpose the detected shapes on the images.
+1. Match the image set features using:
+    1. Correlation
+    2. Zero-mean correlation
+    3. Sum of squared differences (SSD)
+    4. and normalized cross correlations.**Then report matching computation time in the GUI.**
 
-2. For given images; initialize the contour for a given object and evolve the Active Contour Model (snake) using the greedy algorithm. Represent the output as chain code and compute the perimeter and the area inside these contours.
+
+2. Generate feature descriptors using scale invariant features (SIFT).**Report computation time in the GUI.**
+
 
 You should implement these tasks **without depending on OpenCV library or alike**.
 
 
 Add new Python files to organize your implementation of the core functionalities:
 
-1. `CV404Hough.py`: this will include your implementation for Hough transform for lines and circles (requirement 1).
-2. `CV404Harris.py`: this will include your implementation for Harris operator for corners detection (requirement 2)
+1. `CV404Template.py`: this will include the implementation for template matching functions (requirement 1). You can use the distance functions from the section as they are. Develop your own methods to extract the similar objects.
+2. `CV404SIFT.py`: this will include the implementation for SIFT technique (requirement 2). Gather the pieces of codes in the notebook in an organized Python class.
 
 ### B) GUI Integration
 
@@ -55,10 +62,10 @@ Integrate your functions in part (A) to the following Qt MainWindow design:
 
 
 
-| Tab 4 |
+| Tab 7 |
 |---|
-| <img src=".screen/tab4.png" style="width:500px;"> |
+| <img src=".screen/tab7.png" style="width:500px;"> |
 
-| Tab 5 |
+| Tab 8 |
 |---|
-| <img src=".screen/tab5.png" style="width:500px;"> |
+| <img src=".screen/tab8.png" style="width:500px;"> |

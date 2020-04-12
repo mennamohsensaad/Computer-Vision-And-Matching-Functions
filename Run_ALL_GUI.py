@@ -1,5 +1,3 @@
-
-
 from PyQt5 import QtWidgets,QtGui , QtCore ,Qt
 from PyQt5.QtWidgets import   QFileDialog  ,QWidget,QApplication
 from PyQt5.QtGui import QPixmap,QPainter,QPen
