@@ -1,3 +1,8 @@
+#________________________menna mohsen  & AL-shimaa gamal______________
+#_______________________ Paticipate in  all code include 4 steps_______________
+#_____________________menna:- organize cv core function with python class_________
+#_____________________shimaa:- integrate function in The class with GUI________________
+
 from scipy.signal import convolve2d,gaussian
 from skimage.transform import rescale
 from skimage.transform import resize
@@ -374,9 +379,6 @@ class SIFT(object):
                                          y=kp[0] * (2**(kp[2]-1)),
                                          _size=kp[3],
                                          _angle=kp[4],
-        #                                  _response=kp[IDX_RESPONSE],
-        #                                  _octave=np.int32(kp[2]),
-                                         # _class_id=np.int32(kp[IDX_CLASSID])
                                          )
                 opencv_kp_list += [opencv_kp]
         
@@ -439,57 +441,15 @@ class SIFT(object):
             for m,n in matches:
                 if m.distance < 0.25*n.distance:
                     good.append(m)
-        
-            # Sort them in the order of their distance.
-        #     matches = sorted(good, key = lambda x:x.distance)
-        #     distances = np.array(list(map(lambda x:x.distance,matches)),dtype=float)
-        #     print(distances)
-        #     distances = (distances - distances.min())/(distances.max()-distances.min())
-        #     colors = np.array(cm.get_cmap('viridis')(distances)).tolist()
-            # cv2.drawMatchesKnn expects list of lists as matches.
-        #      draw_matches(img_a,pts_a,img_b,pts_b,matches,colors,30)
+       
             img_match = np.empty((max(img_a.shape[0], img_b.shape[0]), img_a.shape[1] + img_b.shape[1], 3), dtype=np.uint8)
-        #     cv2.drawMatchesKnn(img_a,pts_a,img_b,pts_b,good,outImg = img_match, matchColor=None,
-        #                        flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-        #     plt.figure(figsize=(20,20))
-        #     plt.imshow(img_match)
-        #     plt.show()
             cv2.drawMatches(img_a,pts_a,img_b,pts_b,good, outImg = img_match,
                            flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
             plt.figure(figsize=(20,20))
             plt.imshow(img_match)
             plt.show()
         
-"""    
-    def draw_matches(self,img1, kp1, img2, kp2, matches, colors,count): 
-            # We're drawing them side by side.  Get dimensions accordingly.
-            # Handle both color and grayscale images.
-            if len(img1.shape) == 3:
-                new_shape = (max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1], img1.shape[2])
-            elif len(img1.shape) == 2:
-                new_shape = (max(img1.shape[0], img2.shape[0]), img1.shape[1]+img2.shape[1])
-            new_img = np.zeros(new_shape, type(img1.flat[0]))  
-            # Place images onto the new image.
-            new_img[0:img1.shape[0],0:img1.shape[1]] = img1
-            new_img[0:img2.shape[0],img1.shape[1]:img1.shape[1]+img2.shape[1]] = img2
-            
-            # Draw lines between matches.  Make sure to offset kp coords in second image appropriately.
-            r = 3
-            thickness = 1
-            for idx in range(min(count,len(matches))):
-                m = matches[idx]
-                # So the keypoint locs are stored as a tuple of floats.  cv2.line(), like most other things,
-                # wants locs as a tuple of ints.
-                end1 = tuple(np.round(kp1[m.queryIdx].pt).astype(int))
-                end2 = tuple(np.round(kp2[m.trainIdx].pt).astype(int) + np.array([img1.shape[1], 0]))
-                cv2.line(new_img, end1, end2, colors[idx], thickness)
-                cv2.circle(new_img, end1, r, colors[idx], thickness)
-                cv2.circle(new_img, end2, r, colors[idx], thickness)
-            
-            plt.figure(figsize=(2,2))
-            plt.imshow(new_img)
-            plt.show()
-"""
-#imgs_dir = 'images'
-#sift=SIFT(imgs_dir)        
-#sift.combine_img_with_pattern()
+
+imgs_dir = 'images'
+sift=SIFT(imgs_dir)        
+sift.combine_img_with_pattern()
