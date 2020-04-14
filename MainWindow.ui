@@ -36,7 +36,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="tab_filters">
      <attribute name="title">
@@ -2105,7 +2105,7 @@ p, li { white-space: pre-wrap; }
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>Input image A</string>
+       <string>Input image</string>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -2118,7 +2118,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>720</x>
-        <y>340</y>
+        <y>170</y>
         <width>101</width>
         <height>51</height>
        </rect>
@@ -2136,7 +2136,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>782</x>
-        <y>410</y>
+        <y>240</y>
         <width>51</width>
         <height>20</height>
        </rect>
@@ -2146,7 +2146,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>150</y>
+        <y>122</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -2158,8 +2158,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_45">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>330</y>
+        <x>24</x>
+        <y>238</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -2172,20 +2172,20 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>220</y>
+        <y>152</y>
         <width>121</width>
         <height>81</height>
        </rect>
       </property>
       <property name="text">
-       <string>Load image B</string>
+       <string>Load pattern</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_43">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>150</y>
+        <y>122</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -2204,14 +2204,14 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
       <property name="text">
-       <string>Load image A</string>
+       <string>Load image </string>
       </property>
      </widget>
      <widget class="QLabel" name="label_47">
       <property name="geometry">
        <rect>
         <x>710</x>
-        <y>410</y>
+        <y>240</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -2236,7 +2236,7 @@ p, li { white-space: pre-wrap; }
        <enum>QFrame::Box</enum>
       </property>
       <property name="text">
-       <string>Input image B</string>
+       <string>Input pattern</string>
       </property>
       <property name="textFormat">
        <enum>Qt::PlainText</enum>
@@ -2248,11 +2248,59 @@ p, li { white-space: pre-wrap; }
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
+     <widget class="QLabel" name="label_SIFT_Features_Matching_with_rotate">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>310</y>
+        <width>361</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="text">
+       <string>Features Matching with rotate</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_8">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>20</y>
+        <width>141</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Tunable parmeters</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_SIFT_size_B">
+      <property name="geometry">
+       <rect>
+        <x>54</x>
+        <y>238</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
      <widget class="QLabel" name="label_SIFT_Features_Matching">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>280</y>
+        <x>70</x>
+        <y>310</y>
         <width>361</width>
         <height>211</height>
        </rect>
@@ -2273,27 +2321,63 @@ p, li { white-space: pre-wrap; }
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBox_8">
+     <widget class="QLineEdit" name="lineEdit_current_process">
       <property name="geometry">
        <rect>
-        <x>710</x>
-        <y>50</y>
-        <width>141</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Tunable parmeters</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_SIFT_size_B">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>330</y>
-        <width>113</width>
+        <x>380</x>
+        <y>260</y>
+        <width>261</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="text">
+       <string>Show consol to see steps of alghorithm running </string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_48">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>260</y>
+        <width>141</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Current Process:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_49">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>290</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>matching with pattern</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_50">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>290</y>
+        <width>171</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>matching with rotated pattern</string>
       </property>
      </widget>
     </widget>
