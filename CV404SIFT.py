@@ -1,7 +1,7 @@
 #________________________menna mohsen  & AL-shimaa gamal______________
 #_______________________ Paticipate in  all code include 4 steps_______________
-#_____________________menna:- organize cv core function with python class_________
-#_____________________shimaa:- integrate function in The class with GUI________________
+#_____________________menna:- organize cv core functions with python class_________
+#_____________________shimaa:- integrate functions in The class with GUI________________
 
 from scipy.signal import convolve2d,gaussian
 from skimage.transform import rescale
