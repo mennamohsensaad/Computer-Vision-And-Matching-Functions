@@ -33,10 +33,11 @@ class imarray(object):
 #
 #	def cmp(self,img):
 #		return cmp(self,img)
+    
 
 	def __getitem__(self,coordinates):
 		return self.__image[coordinates]
-
+    
 	def load(self, image) :
 		image = np.asarray(image,dtype=np.uint8)
 		if len(image.shape) == 2 :
