@@ -37,6 +37,25 @@ from PIL.ImageQt import ImageQt
 from os.path import isfile , join
 
 
+
+from scipy.signal import convolve2d,gaussian
+from skimage.transform import rescale
+from skimage.transform import resize
+import matplotlib.cm as cm
+from os.path import isfile , join
+
+from scipy import signal
+from math import sqrt
+import logging
+from math import sin, cos
+import glob
+from skimage.transform import rotate
+from sympy import Symbol
+import sympy as sym
+import time
+import SIFT_class as c
+
+
 class CV(QtWidgets.QMainWindow):
     def __init__(self):
         super(CV, self).__init__()
@@ -80,6 +99,12 @@ class CV(QtWidgets.QMainWindow):
         self.ui.pushButton_filters_load.clicked.connect(self.button_clicked)
         self.ui.comboBox.currentIndexChanged.connect(self.add_noise)
         self.ui.comboBox_2.currentIndexChanged.connect(self.show_filters)
+        ##___________SIFT____________
+        self.obj=c.SIFT(self)
+        self.iteration=0
+        self.ui.pushButton_load_TM_A_2.clicked.connect(self.button_SIFTA)##LOAD IMAGE 1 SIFT
+        self.ui.pushButton_load_TM_B_2.clicked.connect(self.button_SIFTB)##LOAD IMAGE 2 SIFT
+        self.ui.pushButton_SIFT_match.clicked.connect(self.combine_img_with_pattern_GUI)##OUTPUT Match
 
     
     def LoadImage_Hough(self):  
@@ -2023,9 +2048,127 @@ class CV(QtWidgets.QMainWindow):
                 self.ui.label_filters_output.setPixmap(self.output_iamge)
                 self.ui.label_filters_output.show()  
     
+     ######________________SIFT_________________    
         
+    def button_SIFTA(self):  
+        self.fileName_A, self.filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG);;img file (*.PNG)")
+        if self.fileName_A:
+            
+            pixmap = QPixmap(self.fileName_A)
+            self.pixmap = pixmap.scaled(512, 512, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation) 
+            #self.ui.lineEdit.setText(""+('image')+"")
+            self.img_SIFRA=mpimg.imread(self.fileName_A)
+            self.ui.lineEdit_SIFT_size_A.setText(""+str(self.img_SIFRA.shape[0])+""+str('x')+""+str(self.img_SIFRA.shape[1])+"")
+            self.ui.label_SIFT_input_A.setPixmap(self.pixmap)####for input image 1
+            self.ui.label_SIFT_input_A.show
+            #self.Display_SIFTA()
+            
+            
+            
+            
+    def button_SIFTB(self):  
+        self.fileName_B, self.filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG);;img file (*.PNG)")
+        if self.fileName_B:
+            
+            pixmap = QPixmap(self.fileName_B)
+            self.pixmap = pixmap.scaled(512, 512, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.img_SIFRB=mpimg.imread(self.fileName_B)
+            #self.ui.lineEdit.setText(""+('image')+"")
+            self.ui.lineEdit_SIFT_size_B.setText(""+str(self.img_SIFRB.shape[0])+""+str('x')+""+str(self.img_SIFRB.shape[1])+"")
+            self.ui.label_SIFT_input_B.setPixmap(self.pixmap)#####for input image 2
+            self.ui.label_SIFT_input_B.show
+            #self.Display_SIFTB()      
+       
+            
+    def combine_img_with_pattern_GUI(self):
+                    stat_t=time.process_time()
+                    #self.ui.lineEdit_current_process.setText(" Show consol to see steps of alghorithm running  ")
+                    img = np.array(Image.open(self.fileName_A))
+                    img,ratio = self.obj.sift_resize(img)
+                    image_patterns = []
+                    pattern,_ = self.obj.sift_resize(np.array(Image.open(self.fileName_B)), ratio )
+                    image_patterns.append(pattern)
+                    image_patterns.append(rotate(pattern, 90))
+                    image_gray = self.obj.rgb2gray( img )
+                    image_patterns_gray = [ self.obj.rgb2gray( img ) for img in image_patterns ]
+                    img_sift = self.pipeline_GUI(image_gray)
+                    image_patterns_sift = []
+                    for pattern in image_patterns_gray:
+                        image_patterns_sift.append( self.pipeline_GUI( pattern ))
+                    for i in range(len(image_patterns)):
+                            self.patt_N=i
+                            pattern = image_patterns[i]
+                            pattern_sift = image_patterns_sift[i]
+                            self.match(img, img_sift[0], img_sift[1], pattern, pattern_sift[0], pattern_sift[1]) 
+                
+                    t=time.process_time()-stat_t
+                    self.ui.lineEdit_SIFT_Time_Elapsed.setText(""+str(t)+"")
+                    
+                    
+    def match(self,img_a, pts_a, desc_a, img_b, pts_b, desc_b):
+            #self.ui.lineEdit_current_process.setText("feature matching for "+self.current_image+"....")
+            img_a, img_b = tuple(map( lambda i: np.uint8(i*255), [img_a,img_b] ))
+            
+            desc_a = np.array( desc_a , dtype = np.float32 )
+            desc_b = np.array( desc_b , dtype = np.float32 )
         
+            pts_a = self.obj.kp_list_2_opencv_kp_list(pts_a)
+            pts_b = self.obj.kp_list_2_opencv_kp_list(pts_b)
         
+            # create BFMatcher object
+            # BFMatcher with default params
+            bf = cv2.BFMatcher()
+            matches = bf.knnMatch(desc_a,desc_b,k=2)
+            # Apply ratio test
+            good = []
+            for m,n in matches:
+                if m.distance < 0.25*n.distance:
+                    good.append(m)
+            img_match = np.empty((max(img_a.shape[0], img_b.shape[0]), img_a.shape[1] + img_b.shape[1], 3), dtype=np.uint8)
+            cv2.drawMatches(img_a,pts_a,img_b,pts_b,good, outImg = img_match,
+                           flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+#            plt.figure(figsize=(20,20))
+#            plt.imshow(img_match)
+#            plt.show()
+            pixels=np.array(img_match)
+            im=array2qimage(pixels)
+            pixmap = QPixmap(im)
+            if self.patt_N==0:
+                  self.ui.label_SIFT_Features_Matching.setPixmap(pixmap)
+            elif self.patt_N==1:
+                 self.ui. label_SIFT_Features_Matching_with_rotate.setPixmap(pixmap)
+                 self.ui.lineEdit_current_process.setText("Algorithm ended successfully")
+           
+            
+            
+        
+    def pipeline_GUI(self,input_img):
+                if self.iteration==0:
+                   self.current_image="wholeImage"
+                elif self.iteration==1:
+                   self.current_image="pattern1"
+                else :
+                   self.current_image="pattern2"
+                #self.ui.lineEdit_current_process.setText("finding initalize parmeter for "+self.current_image+".......")
+                print("finding initalize parmeter for "+self.current_image+".......")
+                self.obj.initalize_par()
+                self.im=input_img
+                img_max = input_img.max()
+                print("finding image dog for "+self.current_image+"....")
+                self.img_dogs, self.img_octaves =self.obj.image_dog(input_img)
+                #self.visualze_scale_dog()
+                print("finding dog keypoints for "+self.current_image+"....")
+                keypoints =self.obj.dog_keypoints( self.img_dogs , img_max , 0.03 )
+                # Each keypoint has four parameters (i,j,scale_idx,orientation)
+                print("finding dog keypoints orientations for "+self.current_image+"....")
+                self.keypoints_ijso = self.obj.dog_keypoints_orientations( self.img_octaves , keypoints , 36 )
+                #self.visualize_points_orirntation()
+                print("extracting sift descriptors128 for "+self.current_image+"....")
+                points,descriptors = self.obj.extract_sift_descriptors128(self.img_octaves , self.keypoints_ijso , 8)
+                print("Ending extract sift descriptors128 for "+self.current_image+"....")
+                print("matching for "+self.current_image+"...")
+                self.iteration=self.iteration+1
+                return points, descriptors   
         
         
 def main():
