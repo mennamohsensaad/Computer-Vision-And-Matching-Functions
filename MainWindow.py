@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.14.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -604,23 +606,39 @@ class Ui_MainWindow(object):
         self.label_TM_Detected_patterns.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.label_TM_Detected_patterns.setObjectName("label_TM_Detected_patterns")
         self.pushButton_TM_match = QtWidgets.QPushButton(self.tab_4)
-        self.pushButton_TM_match.setGeometry(QtCore.QRect(710, 320, 101, 51))
+        self.pushButton_TM_match.setGeometry(QtCore.QRect(720, 170, 111, 51))
         font = QtGui.QFont()
         font.setPointSize(15)
         self.pushButton_TM_match.setFont(font)
         self.pushButton_TM_match.setObjectName("pushButton_TM_match")
-        self.groupBox_4 = QtWidgets.QGroupBox(self.tab_4)
-        self.groupBox_4.setGeometry(QtCore.QRect(700, 30, 141, 141))
-        self.groupBox_4.setObjectName("groupBox_4")
         self.label_46 = QtWidgets.QLabel(self.tab_4)
-        self.label_46.setGeometry(QtCore.QRect(700, 390, 71, 20))
+        self.label_46.setGeometry(QtCore.QRect(690, 290, 71, 20))
         self.label_46.setObjectName("label_46")
         self.lineEdit_TM_Time_Elapsed = QtWidgets.QLineEdit(self.tab_4)
-        self.lineEdit_TM_Time_Elapsed.setGeometry(QtCore.QRect(772, 390, 51, 20))
+        self.lineEdit_TM_Time_Elapsed.setGeometry(QtCore.QRect(760, 290, 81, 20))
         self.lineEdit_TM_Time_Elapsed.setObjectName("lineEdit_TM_Time_Elapsed")
         self.lineEdit_TM_size_A = QtWidgets.QLineEdit(self.tab_4)
         self.lineEdit_TM_size_A.setGeometry(QtCore.QRect(50, 130, 113, 20))
         self.lineEdit_TM_size_A.setObjectName("lineEdit_TM_size_A")
+        self.comboBox_3 = QtWidgets.QComboBox(self.tab_4)
+        self.comboBox_3.setGeometry(QtCore.QRect(20, 380, 131, 21))
+        self.comboBox_3.setObjectName("comboBox_3")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.label_52 = QtWidgets.QLabel(self.tab_4)
+        self.label_52.setGeometry(QtCore.QRect(20, 350, 141, 16))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_52.setFont(font)
+        self.label_52.setObjectName("label_52")
+        self.label_53 = QtWidgets.QLabel(self.tab_4)
+        self.label_53.setGeometry(QtCore.QRect(850, 290, 31, 16))
+        self.label_53.setObjectName("label_53")
         self.activecontour.addTab(self.tab_4, "")
         self.tab_5 = QtWidgets.QWidget()
         self.tab_5.setObjectName("tab_5")
@@ -715,7 +733,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.activecontour.setCurrentIndex(7)
+        self.activecontour.setCurrentIndex(6)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -848,8 +866,14 @@ class Ui_MainWindow(object):
         self.label_TM_Matching_space.setText(_translate("MainWindow", "Matching space "))
         self.label_TM_Detected_patterns.setText(_translate("MainWindow", "Detected patterns"))
         self.pushButton_TM_match.setText(_translate("MainWindow", "Match"))
-        self.groupBox_4.setTitle(_translate("MainWindow", "Detection parmeters"))
         self.label_46.setText(_translate("MainWindow", "Time Elapsed:"))
+        self.comboBox_3.setItemText(0, _translate("MainWindow", "Select"))
+        self.comboBox_3.setItemText(1, _translate("MainWindow", "Direct Correlation"))
+        self.comboBox_3.setItemText(2, _translate("MainWindow", "Zero-mean correlation"))
+        self.comboBox_3.setItemText(3, _translate("MainWindow", "SSD"))
+        self.comboBox_3.setItemText(4, _translate("MainWindow", "Normalized cross-correlation"))
+        self.label_52.setText(_translate("MainWindow", "Choose Your Method"))
+        self.label_53.setText(_translate("MainWindow", "Sec"))
         self.activecontour.setTabText(self.activecontour.indexOf(self.tab_4), _translate("MainWindow", "Template Matching"))
         self.label_SIFT_input_A.setText(_translate("MainWindow", "Input image"))
         self.pushButton_SIFT_match.setText(_translate("MainWindow", "Match"))
@@ -867,5 +891,4 @@ class Ui_MainWindow(object):
         self.label_50.setText(_translate("MainWindow", "matching with rotated pattern"))
         self.label_51.setText(_translate("MainWindow", "sec"))
         self.activecontour.setTabText(self.activecontour.indexOf(self.tab_5), _translate("MainWindow", "SIFT"))
-
 from pyqtgraph import PlotWidget

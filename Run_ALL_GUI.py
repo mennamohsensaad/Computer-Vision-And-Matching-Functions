@@ -35,16 +35,12 @@ from pyqtgraph import PlotWidget
 import seaborn as sns
 from PIL.ImageQt import ImageQt
 from os.path import isfile , join
-
-
-
-from scipy.signal import convolve2d,gaussian
 from skimage.transform import rescale
 from skimage.transform import resize
 import matplotlib.cm as cm
 from os.path import isfile , join
-
 from scipy import signal
+from scipy.signal import convolve2d
 from math import sqrt
 import logging
 from math import sin, cos
@@ -54,6 +50,18 @@ from sympy import Symbol
 import sympy as sym
 import time
 import SIFT_class as c
+
+from scipy.signal import correlate2d
+from skimage import io
+from IPython.display import display
+#import matplotlib.cm as cm
+#from os.path import isfile , join
+#from cvutils import rgb2gray
+import Feature_ext
+import importlib
+importlib.reload(Feature_ext)
+import templateFunc as templateFunc
+
 
 
 class CV(QtWidgets.QMainWindow):
@@ -105,6 +113,13 @@ class CV(QtWidgets.QMainWindow):
         self.ui.pushButton_load_TM_A_2.clicked.connect(self.button_SIFTA)##LOAD IMAGE 1 SIFT
         self.ui.pushButton_load_TM_B_2.clicked.connect(self.button_SIFTB)##LOAD IMAGE 2 SIFT
         self.ui.pushButton_SIFT_match.clicked.connect(self.combine_img_with_pattern_GUI)##OUTPUT Match
+        ##_____________Template_Matching_______________
+        self.ui.pushButton_load_TM_A.clicked.connect(self.LoadImage_Image_Template)##LOAD IMAGE FOR MATCHING
+        self.ui.pushButton_load_TM_B.clicked.connect(self.Load_Template)  ### LOAD TEMPLATE
+        self.ui.pushButton_TM_match.clicked.connect(self.Apply_Template_Matching)##Match
+#        self.ui.comboBox_3.currentIndexChanged.connect(self.Apply_Template_Matching)###Choose Matching  Method
+
+#
 
     
     def LoadImage_Hough(self):  
@@ -883,6 +898,7 @@ class CV(QtWidgets.QMainWindow):
         self.ui.lineEdit_Perimeter_of_contour.setText(""+str(float(primeter))+""+""+str(' ')+""+""+str('m')+"")
         return area,primeter
         
+
 
 #    
 #    def Area_and_perimeter(self):
@@ -2169,15 +2185,178 @@ class CV(QtWidgets.QMainWindow):
                 print("matching for "+self.current_image+"...")
                 self.iteration=self.iteration+1
                 return points, descriptors   
+            
+            
+            
+            
+            
+                    ######_________________TEMPLATE_MATCHING_________________________
+        
+        
+    def LoadImage_Image_Template(self):  
+        self.fileName_IT, _filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG *.JPEG *.JFIF);;img file (*.jpg *.PNG *.JPEG *.JFIF)")
+        if self.fileName_IT:
+            self.pixmap = QPixmap(self.fileName_IT)
+            self.input_img =mpimg.imread(self.fileName_IT)
+            self.ui.label_TM_input_A.setPixmap(self.pixmap)
+            
+            self.imgs_gray =self.rgb2gray(self.input_img)
+            self.imgs_gray =asarray(self.imgs_gray)
+            
+            self.ui.label_TM_Matching_space.clear()
+            self.ui.label_TM_Detected_patterns.clear()
+            
+            pixels = asarray(self.input_img)
+            print(pixels.shape)
+            self.ui.lineEdit_TM_size_A.setText(""+str(pixels.shape[0])+" "+str('x')+" "+str(pixels.shape[1])+"")
+    
+    def Load_Template(self):  
+        self.fileName_T, _filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG *.JPEG *.JFIF);;img file (*.jpg *.PNG *.JPEG *.JFIF)")
+        if self.fileName_T:
+            self.pixmap = QPixmap(self.fileName_T)
+            self.input_img =mpimg.imread(self.fileName_T)
+            self.ui.label_TM_input_B.setPixmap(self.pixmap)
+            
+            self.Templete_gray =self.rgb2gray(self.input_img)
+            self.Templete_gray =asarray(self.Templete_gray)
+            
+            
+            self.ui.label_TM_Matching_space.clear()
+            self.ui.label_TM_Detected_patterns.clear()
+            
+            pixels = asarray(self.input_img)
+            print(pixels.shape)
+            self.ui.lineEdit_TM_size_B.setText(""+str(pixels.shape[0])+" "+str('x')+" "+str(pixels.shape[1])+"")
+            
+            
+    def Apply_Template_Matching(self):
+        ####_________Calculate_Time
+         stat_t = time.process_time()
+
+         self.Matching = str(self.ui.comboBox_3.currentText())
+       
+         print(self.Matching)
+         def images():
+                        imgs_dir1 = 'images'
+                        imgs_names1 = [self.fileName_IT]
+                        imgs_fnames1 = [ join( imgs_dir1, img_name1) for img_name1 in imgs_names1 ]
+                        imgs_rgb1 = [ np.array(Image.open(img1)) for img1 in imgs_fnames1 ]
+                        img_gray = [ rgb2gray( img1 ) for img1 in imgs_rgb1 ]
+                        
+                        imgs_dir = 'images'
+                        imgs_names = [self.fileName_T]
+                        imgs_fnames = [ join( imgs_dir, img_name) for img_name in imgs_names ]
+                        imgs_rgb = [ np.array(Image.open(img)) for img in imgs_fnames ]
+                        Templete_gray = [ rgb2gray( img ) for img in imgs_rgb ]
+                        return img_gray,Templete_gray
+                    
+         img_gray,Templete_gray=images()           
+         if self.Matching=="Direct Correlation":
+             
+                self.ui.label_TM_Matching_space.clear()
+                self.ui.label_TM_Detected_patterns.clear()
+                
+             #______Method 0: Direct 2D correlation of the image with the template
+                def Direct_Correlation():
+                        matches_corr = [ templateFunc.match_template_corr(x,h) for (x,h) in zip(img_gray,Templete_gray)]
+                        matches_corr_maxima = [ Feature_ext.Get_Maximum(x,min(t.shape)//8) for (x,t) in zip(matches_corr,Templete_gray)]
+                        patches = zip(img_gray,Templete_gray,  matches_corr, matches_corr_maxima)
+                        return patches
+                
+                
+                patches=Direct_Correlation()
+                templateFunc.draw_match_0(patches)
+                #M.method_0func(patches)
+                self.ui.label_TM_Matching_space.setPixmap(QPixmap("matching_space.jpg"))
+                self.ui.label_TM_Detected_patterns.setPixmap(QPixmap("template_matching.jpg"))
+                    
+ 
+         elif self.Matching=="Zero-mean correlation": 
+             
+              self.ui.label_TM_Matching_space.clear()
+              self.ui.label_TM_Detected_patterns.clear() 
+             
+              #______Method 1: Direct 2D correlation of the image with the zero-mean template
+              def Zero_mean_correlation():
+                        matches_corr_zmean = [ templateFunc.match_template_corr_zmean(x,h) for (x,h) in zip(img_gray,Templete_gray)]
+                        matches_corr_zmean_maxima = [ Feature_ext.Get_Maximum(x,min(t.shape)//8) for (x,t) in zip(matches_corr_zmean,Templete_gray)]
+                        patches = zip(img_gray,Templete_gray,
+                         matches_corr_zmean
+                        ,matches_corr_zmean_maxima)
+                        return patches
+                
+              patches=Zero_mean_correlation()
+              templateFunc.draw_match_1(patches)
+              #M1.method1_func(patches)
+              self.ui.label_TM_Matching_space.setPixmap(QPixmap("matching_space.jpg"))
+              self.ui.label_TM_Detected_patterns.setPixmap(QPixmap("template_matching.jpg"))
+              
+        
+         elif self.Matching =="SSD" : 
+             
+                self.ui.label_TM_Matching_space.clear()
+                self.ui.label_TM_Detected_patterns.clear()
+                
+               ##_______Method 2: SSD
+                def SSD():
+                       
+                        
+                        matches_ssd = [ templateFunc.match_template_ssd(x,h) for (x,h) in zip(img_gray,Templete_gray)]
+                        matches_ssd_maxima = [ Feature_ext.Get_Maximum(x,min(t.shape)) for (x,t) in zip(matches_ssd,Templete_gray)]
+                        patches = zip(img_gray,Templete_gray,
+                                     matches_ssd,
+                                     matches_ssd_maxima)
+                        return patches
+                
+                
+                patches=SSD()
+                #M2.method2_func(patches)
+                templateFunc.draw_match_2(patches)
+                self.ui.label_TM_Matching_space.setPixmap(QPixmap("matching_space.jpg"))
+                self.ui.label_TM_Detected_patterns.setPixmap(QPixmap("template_matching.jpg"))
+            
+         elif self.Matching =="Normalized cross-correlation" : 
+             
+             
+                self.ui.label_TM_Matching_space.clear()
+                self.ui.label_TM_Detected_patterns.clear()
+              
+#               self.ui.label_Hough_output.setPixmap(QPixmap("canny_edges.jpg"))         
+               #    _____Method 3: Normalized cross-correlation
+                def Normalized_cross_correlation():
+                        matches_xcorr = [ templateFunc.match_template_xcorr(x,h) for (x,h) in zip(img_gray,Templete_gray)]
+                        matches_xcorr_maxima = [ Feature_ext.Get_Maximum(x,min(t.shape)//8) for (x,t) in zip(matches_xcorr,Templete_gray)]
+                        patches = zip(img_gray,Templete_gray,
+                                      matches_xcorr,
+                                     matches_xcorr_maxima)
+                        return patches
+                
+                
+                patches=Normalized_cross_correlation()
+                templateFunc.draw_match_3(patches)
+                #M3.method3_func(patches)
+                self.ui.label_TM_Matching_space.setPixmap(QPixmap("matching_space.jpg"))
+                self.ui.label_TM_Detected_patterns.setPixmap(QPixmap("template_matching.jpg"))
+               
+                    
+                    
+         else :  
+    
+            self.ui.label_TM_Matching_space.clear()
+            self.ui.label_TM_Detected_patterns.clear()       
+
+         t=time.process_time()-stat_t
+         self.ui.lineEdit_TM_Time_Elapsed.setText(""+str(t)+"")        
+            
+                
         
         
 def main():
     app = QtWidgets.QApplication(sys.argv)
     application =CV()
     application.show()
-  
     
-  
+    
     sys.exit(app.exec_())
 
 

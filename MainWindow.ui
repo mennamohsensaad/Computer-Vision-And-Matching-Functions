@@ -36,7 +36,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="tab_filters">
      <attribute name="title">
@@ -2023,9 +2023,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="pushButton_TM_match">
       <property name="geometry">
        <rect>
-        <x>710</x>
-        <y>320</y>
-        <width>101</width>
+        <x>720</x>
+        <y>170</y>
+        <width>111</width>
         <height>51</height>
        </rect>
       </property>
@@ -2038,24 +2038,11 @@ p, li { white-space: pre-wrap; }
        <string>Match</string>
       </property>
      </widget>
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="geometry">
-       <rect>
-        <x>700</x>
-        <y>30</y>
-        <width>141</width>
-        <height>141</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Detection parmeters</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_46">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>390</y>
+        <x>690</x>
+        <y>290</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -2067,9 +2054,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QLineEdit" name="lineEdit_TM_Time_Elapsed">
       <property name="geometry">
        <rect>
-        <x>772</x>
-        <y>390</y>
-        <width>51</width>
+        <x>760</x>
+        <y>290</y>
+        <width>81</width>
         <height>20</height>
        </rect>
       </property>
@@ -2082,6 +2069,74 @@ p, li { white-space: pre-wrap; }
         <width>113</width>
         <height>20</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>380</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Direct Correlation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Zero-mean correlation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SSD</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Normalized cross-correlation</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_52">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>350</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Choose Your Method</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_53">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>290</y>
+        <width>31</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sec</string>
       </property>
      </widget>
     </widget>
