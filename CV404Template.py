@@ -84,8 +84,11 @@ patches = zip(imgs_gray,Templete_gray,
               matches_corr,matches_corr_zmean,matches_ssd,matches_xcorr,
              matches_corr_maxima,matches_corr_zmean_maxima,matches_ssd_maxima,matches_xcorr_maxima)
 
+
 fig, ax = plt.subplots(len(imgs_gray)*(methods_n+1),2,figsize = (20, 40))
 plt.autoscale(True)
+
+
 for i,(im,temp,mcorr,mcorrz,mssd,mxcorr,pcorr,pcorrz,pssd,pxcorr) in enumerate(patches):
     def get_rect_on_maximum(y,template):
         ij = np.unravel_index(np.argmax(y), y.shape)
