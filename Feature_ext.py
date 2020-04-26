@@ -1,7 +1,25 @@
 import numpy as np
 import scipy.ndimage as ndimage
 import scipy.ndimage.filters as filters
+import numpy
+from scipy import ndimage as ndi
+import matplotlib.pyplot as plt
+from skimage.feature import peak_local_max
+from skimage import data, img_as_float
 
+
+def Get_Maximum(x , size):
+      
+        image_max = ndi.maximum_filter(x, size, mode='constant')
+        
+        # Comparison between image_max and im to find the coordinates of local maxima
+        xy = peak_local_max (x, min_distance=65)
+        return xy
+    
+    
+    
+    
+    
 #  Felzenszwalb et al.
 #def non_max_suppression_slow(boxes, overlapThresh):
 #	# if there are no boxes, return an empty list
@@ -102,19 +120,37 @@ import scipy.ndimage.filters as filters
 #	# integer data type
 #	return boxes[pick].astype("int")
 
-def maximum_filter_ignore_nan(array, *args, **kwargs):
-    nans = np.isnan(array)
-    replaced = np.where(nans, -np.inf, array)
-    return filters.maximum_filter(replaced, *args, **kwargs)
+#def maximum_filter_ignore_nan(array, *args, **kwargs):
+#    nans = np.isnan(array)
+#    replaced = np.where(nans, -np.inf, array)
+#    return filters.maximum_filter(replaced, *args, **kwargs)
+#
+#def minimum_filter_ignore_nan(array, *args, **kwargs):
+#    nans = np.isnan(array)
+#    replaced = np.where(nans, np.inf, array)
+#    return filters.minimum_filter(replaced, *args, **kwargs)
 
-def minimum_filter_ignore_nan(array, *args, **kwargs):
-    nans = np.isnan(array)
-    replaced = np.where(nans, np.inf, array)
-    return filters.minimum_filter(replaced, *args, **kwargs)
+#def Get_Maximum( x , size, threshold = 0.5 ):
+#    x_max = maximum_filter_ignore_nan(x,size)
+#    maxima = (x_max) >= (np.amax( x_max) * threshold)
+#    labeled, num_objects = ndimage.label(maxima)
+#    xy = np.array(ndimage.center_of_mass(x, labeled, range(1, num_objects+1)))
+#    return xy
 
-def Get_Maximum( x , size, threshold = 0.5 ):
-    x_max = maximum_filter_ignore_nan(x,size)
-    maxima = (x_max) >= (np.amax( x_max) * threshold)
-    labeled, num_objects = ndimage.label(maxima)
-    xy = np.array(ndimage.center_of_mass(x, labeled, range(1, num_objects+1)))
-    return xy
+
+
+#
+#def Get_Maximum(array, min_distance = 1, periodic=False, edges_allowed=True): 
+#    """Find all local maxima of the array, separated by at least min_distance."""
+#    array = numpy.asarray(array)
+#    cval = 0 
+#    if periodic: 
+#        mode = 'wrap' 
+#    elif edges_allowed: 
+#        mode = 'nearest' 
+#    else: 
+#        mode = 'constant' 
+#    cval = array.max()+1 
+#    max_points = array == ndimage.maximum_filter(array, 1+2*min_distance, mode=mode, cval=cval) 
+#    xy= [indices[max_points] for indices in numpy.indices(array.shape)]
+#    return xy
