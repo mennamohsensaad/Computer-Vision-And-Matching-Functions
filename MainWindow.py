@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.9.2
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -702,17 +700,6 @@ class Ui_MainWindow(object):
         self.label_SIFT_Features_Matching.setScaledContents(True)
         self.label_SIFT_Features_Matching.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.label_SIFT_Features_Matching.setObjectName("label_SIFT_Features_Matching")
-        self.lineEdit_current_process = QtWidgets.QLineEdit(self.tab_5)
-        self.lineEdit_current_process.setGeometry(QtCore.QRect(380, 260, 261, 20))
-        self.lineEdit_current_process.setObjectName("lineEdit_current_process")
-        self.label_48 = QtWidgets.QLabel(self.tab_5)
-        self.label_48.setGeometry(QtCore.QRect(230, 260, 141, 20))
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_48.setFont(font)
-        self.label_48.setObjectName("label_48")
         self.label_49 = QtWidgets.QLabel(self.tab_5)
         self.label_49.setGeometry(QtCore.QRect(190, 290, 121, 16))
         self.label_49.setObjectName("label_49")
@@ -733,7 +720,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.activecontour.setCurrentIndex(6)
+        self.activecontour.setCurrentIndex(7)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -885,10 +872,9 @@ class Ui_MainWindow(object):
         self.label_SIFT_input_B.setText(_translate("MainWindow", "Input pattern"))
         self.label_SIFT_Features_Matching_with_rotate.setText(_translate("MainWindow", "Features Matching with rotate"))
         self.label_SIFT_Features_Matching.setText(_translate("MainWindow", "Features Matching "))
-        self.lineEdit_current_process.setText(_translate("MainWindow", "Show consol to see steps of alghorithm running "))
-        self.label_48.setText(_translate("MainWindow", "Current Process:"))
         self.label_49.setText(_translate("MainWindow", "matching with pattern"))
         self.label_50.setText(_translate("MainWindow", "matching with rotated pattern"))
         self.label_51.setText(_translate("MainWindow", "sec"))
         self.activecontour.setTabText(self.activecontour.indexOf(self.tab_5), _translate("MainWindow", "SIFT"))
+
 from pyqtgraph import PlotWidget

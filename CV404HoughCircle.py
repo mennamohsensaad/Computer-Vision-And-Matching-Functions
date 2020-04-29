@@ -191,7 +191,7 @@ def displayCircles(A):
           
     plt.show()
 
-file_path = './images/Coins.jpg'
+file_path = './images/test.jpg'
 img = imarray(file_path)
 image = gaussian_filter(3,3,1,img)                                                
 image = edge(image,128)                                               

@@ -36,7 +36,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="tab_filters">
      <attribute name="title">
@@ -2361,39 +2361,6 @@ p, li { white-space: pre-wrap; }
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_current_process">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>260</y>
-        <width>261</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Show consol to see steps of alghorithm running </string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_48">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>260</y>
-        <width>141</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>13</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Current Process:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_49">

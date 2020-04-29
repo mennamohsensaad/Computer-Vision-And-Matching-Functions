@@ -2153,7 +2153,7 @@ class CV(QtWidgets.QMainWindow):
                   self.ui.label_SIFT_Features_Matching.setPixmap(pixmap)
             elif self.patt_N==1:
                  self.ui. label_SIFT_Features_Matching_with_rotate.setPixmap(pixmap)
-                 self.ui.lineEdit_current_process.setText("Algorithm ended successfully")
+                 #self.ui.lineEdit_current_process.setText("Algorithm ended successfully")
            
             
             
