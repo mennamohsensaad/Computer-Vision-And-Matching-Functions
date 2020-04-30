@@ -21,6 +21,8 @@ import cv2
 from math import sin, cos
 import glob
 from skimage.transform import rotate
+from sympy import Symbol
+import sympy as sym
 
 
 class SIFT(object):
@@ -148,6 +150,37 @@ class SIFT(object):
                 return all([np.all( value >= img ) for img in [img1,img2,img3]]) # test map
             else:
                 return all([np.all( value <= img ) for img in [img1,img2,img3]]) # test map
+            
+### Refine Function
+                
+    def refine (self,dog,threshold = 0.03):
+        #dx = np.array([-1,1]).reshape((1,2))
+        #dy = dx.T
+        x= Symbol('x')
+        y= Symbol('y')
+        self.SIGMA= Symbol('SIGMA')
+        dog_x=sym.Derivative(dog,x).doit()
+        dog_y=sym.Derivative(dog,y).doit()
+        dog_SIGMA=sym.Derivative(dog,self.SIGMA).doit()
+        
+        dog_xx=sym.Derivative(dog,x,2).doit()
+        dog_yy=sym.Derivative(dog,y,2).doit()
+        dog_SIGMA2=sym.Derivative(dog,self.SIGMA,2).doit()
+        
+        dog_xy=np.dot(dog_x,dog_y)
+        dog_xSIGMA=np.dot(dog_x,dog_SIGMA)
+        dog_ySIGMA=np.dot(dog_y,dog_SIGMA)
+        
+        
+        A=np.array([[dog_xx,dog_xy,dog_xSIGMA],[dog_xy,dog_yy,dog_ySIGMA],[dog_xSIGMA,dog_ySIGMA,dog_SIGMA2]])
+        
+        inverse=np.linalg.inv(A)
+        B=np.array([[dog_x],[dog_y],[dog_SIGMA]])
+        
+        X_hat=-0.5(np.dot(inverse,B))
+        coords = list(map( tuple , np.argwhere( np.abs( X_hat ) > threshold ).tolist() ))
+        
+        return coords        
         
     def corners(self, dog , r = 10 ):
             threshold = ((r + 1.0)**2)/r
@@ -183,6 +216,7 @@ class SIFT(object):
                     keypoints = np.full( dog.shape, False, dtype = np.bool)
                     candidates = set( (i,j) for i in range(1, dog.shape[0] - 1) for j in range(1, dog.shape[1] - 1))
                     search_size = len(candidates)
+                    #candidates = candidates & set(self.refine(dog,threshold))& set(self.corners(dog)) & set(self.contrast( dog , img_max, threshold ))
                     candidates = candidates & set(self.corners(dog)) & set(self.contrast( dog , img_max, threshold ))
                     search_size_filtered = len(candidates)
                     """
