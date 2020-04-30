@@ -1856,7 +1856,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>170</x>
-        <y>250</y>
+        <y>270</y>
         <width>241</width>
         <height>231</height>
        </rect>
@@ -1996,7 +1996,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>430</x>
-        <y>250</y>
+        <y>270</y>
         <width>241</width>
         <height>231</height>
        </rect>
@@ -2041,8 +2041,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_46">
       <property name="geometry">
        <rect>
-        <x>690</x>
-        <y>290</y>
+        <x>620</x>
+        <y>250</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -2054,9 +2054,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QLineEdit" name="lineEdit_TM_Time_Elapsed">
       <property name="geometry">
        <rect>
-        <x>760</x>
-        <y>290</y>
-        <width>81</width>
+        <x>690</x>
+        <y>250</y>
+        <width>151</width>
         <height>20</height>
        </rect>
       </property>
@@ -2130,7 +2130,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>850</x>
-        <y>290</y>
+        <y>250</y>
         <width>31</width>
         <height>16</height>
        </rect>
@@ -2190,9 +2190,9 @@ p, li { white-space: pre-wrap; }
      <widget class="QLineEdit" name="lineEdit_SIFT_Time_Elapsed">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>220</y>
-        <width>61</width>
+        <x>690</x>
+        <y>260</y>
+        <width>141</width>
         <height>20</height>
        </rect>
       </property>
@@ -2265,8 +2265,8 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label_47">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>220</y>
+        <x>620</x>
+        <y>260</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -2393,7 +2393,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>840</x>
-        <y>220</y>
+        <y>260</y>
         <width>31</width>
         <height>21</height>
        </rect>

@@ -2070,6 +2070,10 @@ class CV(QtWidgets.QMainWindow):
         self.fileName_A, self.filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG);;img file (*.PNG)")
         if self.fileName_A:
             
+            self.ui.label_SIFT_input_A.clear()
+            self.ui.label_SIFT_input_B.clear()
+            self.ui.label_SIFT_Features_Matching.clear()
+            self.ui. label_SIFT_Features_Matching_with_rotate.clear()
             pixmap = QPixmap(self.fileName_A)
             self.pixmap = pixmap.scaled(512, 512, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation) 
             #self.ui.lineEdit.setText(""+('image')+"")
