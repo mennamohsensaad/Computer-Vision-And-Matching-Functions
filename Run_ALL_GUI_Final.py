@@ -2217,8 +2217,11 @@ class CV(QtWidgets.QMainWindow):
     def Load_Template(self):  
         self.fileName_T, _filter = QFileDialog.getOpenFileName(self, "Title"," " , "Filter -- img file (*.jpg *.PNG *.JPEG *.JFIF);;img file (*.jpg *.PNG *.JPEG *.JFIF)")
         if self.fileName_T:
+            
+            
             self.pixmap = QPixmap(self.fileName_T)
             self.input_img =mpimg.imread(self.fileName_T)
+            
             self.ui.label_TM_input_B.setPixmap(self.pixmap)
             
             self.Templete_gray =self.rgb2gray(self.input_img)
@@ -2227,11 +2230,11 @@ class CV(QtWidgets.QMainWindow):
             
             self.ui.label_TM_Matching_space.clear()
             self.ui.label_TM_Detected_patterns.clear()
-            
             pixels = asarray(self.input_img)
             print(pixels.shape)
             self.ui.lineEdit_TM_size_B.setText(""+str(pixels.shape[0])+" "+str('x')+" "+str(pixels.shape[1])+"")
             
+           
             
     def Apply_Template_Matching(self):
         ####_________Calculate_Time
@@ -2252,6 +2255,23 @@ class CV(QtWidgets.QMainWindow):
                         imgs_fnames = [ join( imgs_dir, img_name) for img_name in imgs_names ]
                         imgs_rgb = [ np.array(Image.open(img)) for img in imgs_fnames ]
                         Templete_gray = [ rgb2gray( img ) for img in imgs_rgb ]
+                        
+                        if  imgs_rgb1[0].shape[0]==950  and  imgs_rgb1[0].shape[1]==950 :
+                            
+                                print ("@@@@@")
+                                width = 600
+                                height = 601 # keep original height
+                                dim = (width, height)
+                                # resize image
+                                imgs_rgb1 =[ cv2.resize(img1, dim, interpolation = cv2.INTER_AREA) for img1 in imgs_rgb1]
+                                img_gray = [ rgb2gray( img1 ) for img1 in imgs_rgb1 ]
+                                width_t = 34
+                                height_t = 37 # keep original height
+                                dim_t = (width_t, height_t)
+                                # resize image
+                                imgs_rgb= [cv2.resize(img, dim_t, interpolation = cv2.INTER_AREA) for img in imgs_rgb]
+                                Templete_gray = [ rgb2gray( img ) for img in imgs_rgb ] 
+                                
                         return img_gray,Templete_gray
                     
          img_gray,Templete_gray=images()           
